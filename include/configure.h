@@ -22,8 +22,8 @@ struct RabbitMQInfo
 struct OSSInfo{
     std::string bucket = "masker-test";
     std::string endpoint = "oss-cn-hangzhou.aliyuncs.com";
-    std::string accessKeyID = "LTAI5t8e3rCQ368YBc2BVYaa";
-    std::string accessKeySecret = "ndw9QzP8daKYFQIYQqkabOSBqyHc4d";
+    std::string accessKeyID = "自填";
+    std::string accessKeySecret = "自填";
 };
 
 #endif
