@@ -1,0 +1,74 @@
+-- 41. 查询不同课程成绩相同的学生的学生编号、课程编号、学生成绩(重点 -- 有疑问？？)
+
+```mysql
+#缺少条件
+select distinct a.s_id, a.c_id, a.s_score
+from Score as a
+cross join Score as b #对于自连接，cross/inner/left/right join没有区别
+where a.s_score = b.s_score and a.c_id != b.c_id
+order by a.s_score desc;
+
+#修改：增加连接条件
+select distinct a.s_id, a.c_id, a.s_score
+from Score as a
+cross join Score as b 
+using (s_id) #连接条件，等价于on a.s_id = b.s_id
+where a.s_score = b.s_score and a.c_id != b.c_id
+order by a.s_score desc;
+
+#修改：增强连接条件
+select  distinct a.s_id, a.c_id, a.s_score
+from Score as a
+cross join Score as b 
+using (s_id, s_score)
+where a.c_id != b.c_id
+order by a.s_score desc;
+```
+
+原结果
+
+![image-20220723152007902](Mysql实例.assets/image-20220723152007902.png)
+
+![image-20220723153403100](Mysql实例.assets/image-20220723153403100.png)
+
+增加连接条件
+
+![image-20220723152036404](Mysql实例.assets/image-20220723152036404.png)
+
+![image-20220723153552691](Mysql实例.assets/image-20220723153552691.png)
+
+增强连接条件
+
+![image-20220723152113463](Mysql实例.assets/image-20220723152113463.png)
+
+## 原结果错误分析
+
+对于自连接，每一条数据都会连接所有数据，则n条数据的表自连接有$n^2$条数据
+
+原查询没有对s_id的要求，则只要是成绩相同的不同课都会被记录
+
+
+
+# MySQL正则表达式
+
+![image-20220723154905421](Mysql实例.assets/image-20220723154905421.png)
+
+```mysql
+SELECT name FROM person_tbl WHERE name REGEXP '^st';
+SELECT name FROM person_tbl WHERE name RLIKE '^st';
+
+SELECT name FROM person_tbl WHERE name NOT REGEXP '^st';
+SELECT name FROM person_tbl WHERE name NOT RLIKE '^st';
+```
+
+
+
+### like语句
+
+![image-20220723155355071](Mysql实例.assets/image-20220723155355071.png)
+
+
+
+'_' 类似 '.'
+
+'%' 类似 '.*'
